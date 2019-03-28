@@ -887,4 +887,4 @@ class Events {
 ``` 
 
 ## 参考资料
-[从头实现一个简易版React](!https://segmentfault.com/a/1190000013510464)               
+[从头实现一个简易版React](https://segmentfault.com/a/1190000013504156)               
