@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>example</title>
+</head>
+<body>
+<div id="app"></div>
+</body>
+<script src="../dist/react-core.js"></script>
+
+<script src="https://unpkg.com/babel-standalone@6.15.0/babel.min.js"></script>
+<script>
+  // 让 babel 识别 ReactCore.createElement
+  window.React = ReactCore;
+</script>
+
+<script type="text/babel">
+  class TodoList extends ReactCore.Component {
+    constructor(props) {
+      super(props);
+      this.state = {
+        list: [],
+        value: ''
+      }
+      this.onAdd =  this.onAdd.bind(this);
+      this.onDelete = this.onDelete.bind(this);
+      this.onChange = this.onChange.bind(this);
+    }
+    onAdd() {
+      const {value, list} = this.state;
+      console.log(this.state)
+      if (value) {
+        this.setState({
+          list: list.concat(value),
+          value: ""
+        });
+      }
+    }
+    onDelete(index) {
+      const list = this.state.list;
+      list.splice(index, 1);
+      this.setState({
+        list
+      });
+    }
+    onChange(e) {
+      console.log(e.target.value.trim())
+      this.setState({
+        value: e.target.value.trim()
+      })
+    }
+    render() {
+      return (
+        <div className="todo-list">
+          <ol className="list-content">
+            {
+              this.state.list.map((item, index) =>
+                <li>{item}<button onClick={() => this.onDelete(index)}>-</button></li>
+              )
+            }
+          </ol>
+          <div className="input-add">
+            <input onKeyUp={this.onChange} value={this.state.value || ""}/>
+            <button onClick={this.onAdd}>+</button>
+          </div>
+        </div>
+      );
+    }
+  }
+
+  ReactCore.render(<TodoList/>, document.getElementById('app'));
+</script>
+</html>
